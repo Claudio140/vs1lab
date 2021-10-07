@@ -169,6 +169,10 @@ fieldset {
   flex-direction: column;
 }
 
+.tagging input {
+  width: calc(100% - 10px);
+}
+
 
 /* ### TODO ### Styles for Discovery component */
 
@@ -177,6 +181,10 @@ fieldset {
   display: flex;
   margin: 20px;
   flex-direction: column;
+}
+
+.discovery__search {
+
 }
 
 .discovery__wrapper {
@@ -215,3 +223,14 @@ fieldset {
 /* ### TODO ### Media Queries */
 
 /* ... your code here ... */
+@media screen and (max-width: 600px) {
+  [class *= "col-"] {
+    width: 100%;
+  }
+  .main {
+    flex-direction: column;
+  }
+  .discovery__wrapper {
+    flex-direction: column;
+  }
+}
