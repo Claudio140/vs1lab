@@ -32,13 +32,14 @@
                 <fieldset>
                     <legend>Add a new location</legend>
                 <label for="latitude">Latitude</label>
-                <input id="latitude" type="number" placeholder="49.01379"/><br>
+                <input id="latitude" type="number" value="49.01379" readonly/><br>
                 <label for="longitude">Longitude</label>
-                <input id="longitude" type="number" placeholder="8.390075"/><br>
+                <input id="longitude" type="number" value="8.390075" readonly/><br>
                 <label for="name">Name</label>
-                <input id="name" placeholder="e.g. Cafeteria Moltkestrasse"/><br>
+                <input id="name" maxlength="10" placeholder="e.g. Cafeteria Moltkestrasse" required/><br>
                 <label for="hashtag">Hashtag</label>
-                <input id="hashtag" placeholder="e.g. HKA"/><br>
+                <input id="hashtag" maxlength="11" placeholder="e.g. #HKA" pattern="#[a-zA-Z0-9]+"/><br>
+                    <input type="button" value="Add"/>
                 </fieldset>
             </form>
             <!-- ############### VS1Lab 1a Form 1 End -->
@@ -52,6 +53,14 @@
             <form class="discovery__search" id="discoveryFilterForm" action="/discovery" method="post">
 
                 <!-- ... your code here ... -->
+                <fieldset>
+                    <legend>Find a saved location</legend>
+                    <label for="searchterm">Search term</label>
+                    <input id="searchterm"/>
+                    <input type="hidden" id="searchLatitude"/>
+                    <input type="hidden" id="searchLongitude"/><br>
+                    <input type="button" value="Search">
+                </fieldset>
 
             </form>
             <!-- ############### VS1Lab 1a Form 2 End -->
