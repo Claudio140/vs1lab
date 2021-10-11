@@ -128,10 +128,7 @@ fieldset {
 /* ### TODO ### Styles for Header Component */
 
 /* ... your code here ... */
-.header {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+.header .row {
   padding: 10px;
   background-color: blanchedalmond;
   align-items: center;
@@ -183,8 +180,8 @@ fieldset {
   flex-direction: column;
 }
 
-.discovery__search {
-
+.discovery__search input {
+  width: 200px;
 }
 
 .discovery__wrapper {
@@ -223,11 +220,11 @@ fieldset {
 /* ### TODO ### Media Queries */
 
 /* ... your code here ... */
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 800px) {
   [class *= "col-"] {
     width: 100%;
   }
-  .main {
+  .main .row {
     flex-direction: column;
   }
   .discovery__wrapper {

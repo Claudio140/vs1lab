@@ -14,14 +14,17 @@
 
 <body>
 <header class="header">
+    <div class="row">
     <img src="./images/location.png" class="header__image" alt="an image of a map and location">
     <h1 class="header__title">GeoTagApp</h1>
     <nav class="header__navigation">
         <a href="#">About</a> | <a href="#">Help</a> | <a href="/">Home</a>
     </nav>
+    </div>
 </header>
 
 <main class="main">
+    <div class="row">
     <div class="col-4">
         <section class="main__tagging tagging">
             <h2>Tagging</h2>
@@ -33,9 +36,9 @@
                 <fieldset>
                     <legend>Add a new location</legend>
                     <label for="latitude">Latitude</label>
-                    <input id="latitude" type="number" value="49.01379" readonly/>
+                    <input id="latitude" type="number" value="49.01379" readonly disabled/>
                     <label for="longitude">Longitude</label>
-                    <input id="longitude" type="number" value="8.390075" readonly/>
+                    <input id="longitude" type="number" value="8.390075" readonly disabled/>
                     <label for="name">Name</label>
                     <input id="name" maxlength="10" placeholder="e.g. Cafeteria Moltkestrasse" required/>
                     <label for="hashtag">Hashtag</label>
@@ -59,10 +62,10 @@
                 <fieldset>
                     <legend>Find a saved location</legend>
                     <label for="searchterm">Search term</label>
-                    <input id="searchterm"/>
+                    <input id="searchterm" placeholder="Type in your search here..."/>
                     <input type="hidden" id="searchLatitude"/>
                     <input type="hidden" id="searchLongitude"/>
-                    <input type="button" id="searchButton" value="Search">
+                    <input type="button" id="searchButton" value="Search" disabled>
                 </fieldset>
 
             </form>
@@ -87,11 +90,13 @@
             </div>
         </section>
     </div>
-
+    </div>
 </main>
 
 <footer class="footer">
-    <span>(c) 2021/22 HKA_IWI_VSYS</span>
+    <div class="row">
+        <span>(c) 2021/22 HKA_IWI_VSYS</span>
+    </div>
 </footer>
 </body>
 
