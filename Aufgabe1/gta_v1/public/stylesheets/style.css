@@ -200,7 +200,7 @@ fieldset {
 
 .discovery__map {
   display: flex;
-  margin: 10px;
+  margin: 10px 10px 25px 10px;
   flex-direction: column;
 }
 
