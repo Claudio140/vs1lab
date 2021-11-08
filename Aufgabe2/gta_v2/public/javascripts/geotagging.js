@@ -8,7 +8,6 @@
 // The console window must be opened explicitly in the browser.
 // Try to find this output in the browser...
 console.log("The geoTagging script is going to start...");
-updateLocation();
 
 /**
  * A class to help using the HTML5 Geolocation API.
@@ -117,10 +116,16 @@ function updateLocation() {
     }
 
     // Part 2: MapQuest API
+    let mapManager = new MapManager("3AxCFIxyzjGPuyQJTKjFZiqCIfHqTPDX");
 
+    let mapString = mapManager.getMapUrl(
+        document.getElementById("searchLatitude").value,
+        document.getElementById("searchLongitude").value,
+        document.getElementById("discoveryResults").value);
+    document.getElementById("mapView").src = mapString;
 }
 
 // Wait for the page to fully load its DOM content, then call updateLocation
 document.addEventListener("DOMContentLoaded", () => {
-    //alert("Please change the script 'geotagging.js'");
+    updateLocation();
 });
