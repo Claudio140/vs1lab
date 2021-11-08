@@ -8,6 +8,7 @@
 // The console window must be opened explicitly in the browser.
 // Try to find this output in the browser...
 console.log("The geoTagging script is going to start...");
+updateLocation();
 
 /**
  * A class to help using the HTML5 Geolocation API.
@@ -104,7 +105,16 @@ class MapManager {
  */
 function updateLocation() {
     // Part 1: GeoLocation API
+    try {
+        let helper = LocationHelper.findLocation(updateLocation);
 
+        document.getElementById("taggingLatitude").value = helper.latitude;
+        document.getElementById("taggingLongitude").value = helper.longitude;
+        document.getElementById("searchLatitude").value = helper.latitude;
+        document.getElementById("searchLongitude").value = helper.longitude;
+    } catch (e) {
+        console.log("The GeoLocation API is currently unavailable.");
+    }
 
     // Part 2: MapQuest API
 
@@ -112,5 +122,5 @@ function updateLocation() {
 
 // Wait for the page to fully load its DOM content, then call updateLocation
 document.addEventListener("DOMContentLoaded", () => {
-    alert("Please change the script 'geotagging.js'");
+    //alert("Please change the script 'geotagging.js'");
 });
