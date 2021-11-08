@@ -105,12 +105,7 @@ class MapManager {
 function updateLocation() {
     // Part 1: GeoLocation API
     try {
-        let helper = LocationHelper.findLocation(updateLocation);
-
-        document.getElementById("taggingLatitude").value = helper.latitude;
-        document.getElementById("taggingLongitude").value = helper.longitude;
-        document.getElementById("searchLatitude").value = helper.latitude;
-        document.getElementById("searchLongitude").value = helper.longitude;
+        LocationHelper.findLocation(updateDocument);
     } catch (e) {
         console.log("The GeoLocation API is currently unavailable.");
     }
@@ -123,6 +118,13 @@ function updateLocation() {
         document.getElementById("searchLongitude").value,
         document.getElementById("discoveryResults").value);
     document.getElementById("mapView").src = mapString;
+}
+
+function updateDocument(helper) {
+    document.getElementById("taggingLatitude").value = helper.latitude;
+    document.getElementById("taggingLongitude").value = helper.longitude;
+    document.getElementById("searchLatitude").value = helper.latitude;
+    document.getElementById("searchLongitude").value = helper.longitude;
 }
 
 // Wait for the page to fully load its DOM content, then call updateLocation
