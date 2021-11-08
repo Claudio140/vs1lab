@@ -34,14 +34,14 @@
                 <!-- ... your code here ... -->
                 <fieldset>
                     <legend>Add a new location</legend>
-                    <label for="latitude">Latitude</label>
-                    <input id="latitude" type="number" value="49.01379" readonly disabled/>
-                    <label for="longitude">Longitude</label>
-                    <input id="longitude" type="number" value="8.390075" readonly disabled/>
-                    <label for="name">Name</label>
-                    <input id="name" maxlength="10" placeholder="e.g. Cafeteria Moltkestrasse" required/>
-                    <label for="hashtag">Hashtag</label>
-                    <input id="hashtag" maxlength="11" placeholder="e.g. #HKA" pattern="#[a-zA-Z0-9]+"/>
+                    <label for="taggingLatitude">Latitude</label>
+                    <input id="taggingLatitude" type="number" value="49.01379" readonly/>
+                    <label for="taggingLongitude">Longitude</label>
+                    <input id="taggingLongitude" type="number" value="8.390075" readonly/>
+                    <label for="taggingName">Name</label>
+                    <input id="taggingName" maxlength="10" placeholder="e.g. Cafeteria Moltkestrasse" required/>
+                    <label for="taggingHashtag">Hashtag</label>
+                    <input id="taggingHashtag" maxlength="11" placeholder="e.g. #HKA" pattern="#[a-zA-Z0-9]+"/>
                     <input type="submit" id="addButton" value="Add"/>
                 </fieldset>
             </form>
