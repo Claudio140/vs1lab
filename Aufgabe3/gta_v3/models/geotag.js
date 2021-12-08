@@ -11,10 +11,31 @@
  */
 class GeoTag {
 
+    constructor(name, latitude, longitude, hashtag) {
+        this.name = name;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.hashtag = hashtag;
+    }
+
     name;
     latitude;
     longitude;
     hashtag;
+
+    static getName() {
+        return this.name;
+    }
+    static getLat() {
+        return this.latitude;
+    }
+    static getLon() {
+        return this.longitude;
+    }
+    static getTag() {
+        return this.hashtag;
+    }
+
     
 }
 

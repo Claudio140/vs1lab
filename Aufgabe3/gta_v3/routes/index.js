@@ -61,6 +61,11 @@ router.get('/', (req, res) => {
  */
 
 // TODO: ... your code here ...
+router.post('/tagging', (req, res) => {
+  var testTag = new GeoTag('Test', 49.013790, 8.404435, '#Test');
+  GeoTagStore.addGeoTag(testTag);
+  res.render('index', { taglist: [GeoTagStore.getNearbyGeoTags(testTag, 1)] })
+});
 
 /**
  * Route '/discovery' for HTTP 'POST' requests.
