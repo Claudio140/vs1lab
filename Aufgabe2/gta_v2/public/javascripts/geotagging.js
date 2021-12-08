@@ -103,21 +103,11 @@ class MapManager {
  * It is called once the page has been fully loaded.
  */
 function updateLocation() {
-    // Part 1: GeoLocation API
     try {
         LocationHelper.findLocation(updateDocument);
     } catch (e) {
         console.log("The GeoLocation API is currently unavailable.");
     }
-
-    // Part 2: MapQuest API
-    let mapManager = new MapManager("3AxCFIxyzjGPuyQJTKjFZiqCIfHqTPDX");
-
-    let mapString = mapManager.getMapUrl(
-        document.getElementById("searchLatitude").value,
-        document.getElementById("searchLongitude").value,
-        document.getElementById("discoveryResults").value);
-    document.getElementById("mapView").src = mapString;
 }
 
 function updateDocument(helper) {
@@ -125,6 +115,12 @@ function updateDocument(helper) {
     document.getElementById("taggingLongitude").value = helper.longitude;
     document.getElementById("searchLatitude").value = helper.latitude;
     document.getElementById("searchLongitude").value = helper.longitude;
+
+    let mapManager = new MapManager("3AxCFIxyzjGPuyQJTKjFZiqCIfHqTPDX");
+    document.getElementById("mapView").src = mapManager.getMapUrl(
+        helper.latitude,
+        helper.longitude,
+        document.getElementById("discoveryResults").value);
 }
 
 // Wait for the page to fully load its DOM content, then call updateLocation
