@@ -27,7 +27,6 @@ const GeoTag = require("./geotag");
  */
 class InMemoryGeoTagStore {
 
-    // TODO: ... your code here ...
     static #geoTags = [];
 
     static addGeoTag(GeoTag) {
@@ -42,12 +41,12 @@ class InMemoryGeoTagStore {
         let result = [];
 
         // doesn't find getLat() as function, because "geotag" is not of GeoTag Type.
-        this.#geoTags.forEach(function (geotag) {
-            let distance = Math.sqrt(Math.pow(geotag.getLat() - location.getLat(), 2) +
-                Math.pow(geotag.getLon() - location.getLon(), 2));
+        this.#geoTags.forEach(function (GeoTag) {
+            let distance = Math.sqrt(Math.pow(GeoTag.getLat() - location.getLat(), 2) +
+                Math.pow(GeoTag.getLon() - location.getLon(), 2));
 
             if (distance <= radius) {
-                result.push(geotag);
+                result.push(GeoTag);
             }
         })
 
@@ -57,9 +56,9 @@ class InMemoryGeoTagStore {
     static searchNearbyGeoTags(location, radius, keyword) {
         let result = this.getNearbyGeoTags(location, radius);
 
-        result.forEach(function (geotag) {
-            if (!(geotag.getName().includes(keyword) || geotag.getTag().includes(keyword))) {
-                result.splice(result.indexOf(geotag), 1);
+        result.forEach(function (GeoTag) {
+            if (!(GeoTag.getName().includes(keyword) || GeoTag.getTag().includes(keyword))) {
+                result.splice(result.indexOf(GeoTag), 1);
             }
         })
 

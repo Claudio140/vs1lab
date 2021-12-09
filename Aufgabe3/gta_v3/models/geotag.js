@@ -23,16 +23,16 @@ class GeoTag {
     longitude;
     hashtag;
 
-    static getName() {
+    getName() {
         return this.name;
     }
-    static getLat() {
+    getLat() {
         return this.latitude;
     }
-    static getLon() {
+    getLon() {
         return this.longitude;
     }
-    static getTag() {
+    getTag() {
         return this.hashtag;
     }
 
