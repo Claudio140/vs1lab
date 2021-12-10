@@ -45,9 +45,9 @@ class InMemoryGeoTagStore {
             let distance = Math.sqrt(Math.pow(GeoTag.getLat - location.getLat, 2) +
                 Math.pow(GeoTag.getLon - location.getLon, 2));
 
-            if (distance <= radius) {
+            //if (distance <= radius) {
                 result.push(GeoTag);
-            }
+            //}
         })
 
         return result;
@@ -57,7 +57,10 @@ class InMemoryGeoTagStore {
         let result = this.getNearbyGeoTags(location, radius);
 
         result.forEach(function (GeoTag) {
-            if (!(GeoTag.getName.includes(keyword) || GeoTag.getTag.includes(keyword))) {
+            let gtname = GeoTag.getName;
+            let gttag = GeoTag.getTag;
+            let keywordStr = keyword;
+            if (!(gtname.includes(keywordStr) || gttag.includes(keywordStr))) {
                 result.splice(result.indexOf(GeoTag), 1);
             }
         })

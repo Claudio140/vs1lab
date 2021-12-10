@@ -68,7 +68,7 @@ router.post('/tagging', (req, res) => {
         req.body["taggingLongitude"],
         req.body["taggingHashtag"]);
     GeoTagStore.addGeoTag(tag);
-    res.render('index', {taglist: [GeoTagStore.getNearbyGeoTags(tag, 1)]})
+    res.render('index', {taglist: GeoTagStore.getNearbyGeoTags(tag, 100)})
 });
 
 /**
