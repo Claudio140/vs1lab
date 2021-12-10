@@ -41,7 +41,6 @@ class InMemoryGeoTagStore {
     static getNearbyGeoTags(location, radius) {
         let result = [];
 
-        // doesn't find getLat() as function, because "geotag" is not of GeoTag Type.
         this.#geoTags.forEach(function (GeoTag) {
             let distance = Math.sqrt(Math.pow(GeoTag.getLat - location.getLat, 2) +
                 Math.pow(GeoTag.getLon - location.getLon, 2));
