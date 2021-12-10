@@ -35,13 +35,13 @@
                 <fieldset>
                     <legend>Add a new location</legend>
                     <label for="taggingLatitude">Latitude</label>
-                    <input id="taggingLatitude" type="number" step="0.001"/>
+                    <input id="taggingLatitude" name="taggingLatitude" type="number" step="0.001"/>
                     <label for="taggingLongitude">Longitude</label>
-                    <input id="taggingLongitude" type="number" step="0.001"/>
+                    <input id="taggingLongitude" name="taggingLongitude" type="number" step="0.001"/>
                     <label for="taggingName">Name</label>
-                    <input id="taggingName" maxlength="10" placeholder="e.g. Cafeteria Moltkestrasse" required/>
+                    <input id="taggingName" name="taggingName" maxlength="10" placeholder="e.g. Cafeteria Moltkestrasse" required/>
                     <label for="taggingHashtag">Hashtag</label>
-                    <input id="taggingHashtag" maxlength="11" placeholder="e.g. #HKA" pattern="#[a-zA-Z0-9]+"/>
+                    <input id="taggingHashtag" name="taggingHashtag" maxlength="11" placeholder="e.g. #HKA" pattern="#[a-zA-Z0-9]+"/>
                     <input type="submit" id="addButton" value="Add"/>
                 </fieldset>
             </form>
@@ -59,10 +59,10 @@
                 <fieldset>
                     <legend>Find a saved location</legend>
                     <label for="searchterm">Search term</label>
-                    <input id="searchterm" placeholder="Type in your search here..."/>
-                    <input type="hidden" id="searchLatitude"/>
-                    <input type="hidden" id="searchLongitude"/>
-                    <input type="submit" id="searchButton" value="Search" disabled>
+                    <input id="searchterm" name="searchterm" placeholder="Type in your search here..."/>
+                    <input type="hidden" id="searchLatitude" name="searchLatitude"/>
+                    <input type="hidden" id="searchLongitude" name="searchLongitude"/>
+                    <input type="submit" id="searchButton" value="Search">
                 </fieldset>
 
             </form>
