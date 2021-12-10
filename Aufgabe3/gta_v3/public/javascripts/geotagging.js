@@ -39,11 +39,12 @@ function updateDocument(helper) {
 
     // Part 2: MapQuest API
     let mapManager = new MapManager("3AxCFIxyzjGPuyQJTKjFZiqCIfHqTPDX");
+    let taglist = document.getElementById("mapView").dataset.tags;
 
     let mapString = mapManager.getMapUrl(
         helper.latitude,
         helper.longitude,
-        document.getElementById("discoveryResults").value);
+        JSON.parse(taglist));
     document.getElementById("mapView").src = mapString;
 }
 
