@@ -42,12 +42,20 @@ class InMemoryGeoTagStore {
         let result = [];
 
         this.#geoTags.forEach(function (GeoTag) {
-            let distance = Math.sqrt(Math.pow(GeoTag.getLat - location.getLat, 2) +
-                Math.pow(GeoTag.getLon - location.getLon, 2));
+            /*let distance = Math.sqrt(Math.pow(GeoTag.latitude - location.latitude, 2) +
+                Math.pow(GeoTag.longitude - location.longitude, 2));*/
+            let dx = 71.5 * (GeoTag.longitude - location.longitude);
+            let dy = 111.3 * (GeoTag.latitude - location.latitude);
+            let distance = Math.sqrt(dx * dx + dy * dy);
+            console.log("distance" + distance);
 
-            //if (distance <= radius) {
+            let a = GeoTag.latitude;
+            console.log("a = " + a);
+
+
+            if (distance <= radius) {
                 result.push(GeoTag);
-            //}
+            }
         })
 
         return result;
