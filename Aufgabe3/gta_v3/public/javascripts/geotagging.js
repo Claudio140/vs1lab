@@ -19,8 +19,7 @@ function updateLocation() {
     let tagLong = document.getElementById("taggingLongitude")
 
     // Part 1: GeoLocation API
-    if (tagLat == null || tagLong == null ||
-        tagLat.value == null || tagLong.value == null ||
+    if (tagLat.value == null || tagLong.value == null ||
         tagLat.value === "" || tagLong.value === "") {
         try {
             LocationHelper.findLocation(updateDocument);
@@ -37,9 +36,13 @@ function updateDocument(helper) {
     document.getElementById("searchLatitude").value = helper.latitude;
     document.getElementById("searchLongitude").value = helper.longitude;
 
+    console.log("Location updated.");
+
     // Part 2: MapQuest API
     let mapManager = new MapManager("3AxCFIxyzjGPuyQJTKjFZiqCIfHqTPDX");
     let taglist = document.getElementById("mapView").dataset.tags;
+
+    console.log(taglist);
 
     let mapString = mapManager.getMapUrl(
         helper.latitude,

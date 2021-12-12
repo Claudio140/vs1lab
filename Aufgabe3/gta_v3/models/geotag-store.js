@@ -42,12 +42,10 @@ class InMemoryGeoTagStore {
         let result = [];
 
         this.#geoTags.forEach(function (GeoTag) {
-            /*let distance = Math.sqrt(Math.pow(GeoTag.latitude - location.latitude, 2) +
-                Math.pow(GeoTag.longitude - location.longitude, 2));*/
+            // Factors added to convert from degrees to kilometers
             let dx = 71.5 * (GeoTag.longitude - location.longitude);
             let dy = 111.3 * (GeoTag.latitude - location.latitude);
             let distance = Math.sqrt(dx * dx + dy * dy);
-            //console.log("distance " + distance);
 
             if (distance <= radius) {
                 result.push(GeoTag);
@@ -66,12 +64,7 @@ class InMemoryGeoTagStore {
             let gtname = GeoTag.name;
             let gttag = GeoTag.hashtag;
             let keywordStr = keyword;
-            /*
-            console.log("gtname " + gtname);
-            console.log("gttag " + gttag);
-            console.log("keywordStr " + keywordStr);
-            console.log("index " + index);
-            */
+
             if ( (gtname.includes(keywordStr) || gttag.includes(keywordStr)) ) {
                 returnval.push(GeoTag);
             }
