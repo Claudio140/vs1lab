@@ -82,14 +82,13 @@
                 <div class="discovery__taglist col-4">
                     <ul class="discovery__results" id="discoveryResults">
                         <% if (taglist !== undefined) taglist.forEach(function(gtag) { %>
-                            <li><%= gtag.name %> ( <%= gtag.latitude %>,<%= gtag.longitude %>) <%= gtag.hashtag %> </li>
+                            <li><%= gtag.name %> (<%= gtag.latitude %>,<%= gtag.longitude %>) <%= gtag.hashtag %> </li>
                         <% }); %>
                     </ul>
                 </div>
 
                 <div class="discovery__map col-8">
-                    <img src="./images/mapview.jpg" alt="a map with locations" id="mapView" data-tags=""/>
-                    <% function updateTags() { document.getElementById("mapView").dataset.tags = JSON.stringify(taglist) } %>
+                    <img src="./images/mapview.jpg" alt="a map with locations" id="mapView" data-tags='<%= JSON.stringify(taglist) %>'/>
                     <span>Result map</span>
                 </div>
             </div>
