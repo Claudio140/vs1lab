@@ -42,30 +42,42 @@ class InMemoryGeoTagStore {
         let result = [];
 
         this.#geoTags.forEach(function (GeoTag) {
-            let distance = Math.sqrt(Math.pow(GeoTag.getLat - location.getLat, 2) +
-                Math.pow(GeoTag.getLon - location.getLon, 2));
+            /*let distance = Math.sqrt(Math.pow(GeoTag.latitude - location.latitude, 2) +
+                Math.pow(GeoTag.longitude - location.longitude, 2));*/
+            let dx = 71.5 * (GeoTag.longitude - location.longitude);
+            let dy = 111.3 * (GeoTag.latitude - location.latitude);
+            let distance = Math.sqrt(dx * dx + dy * dy);
+            //console.log("distance " + distance);
 
-            //if (distance <= radius) {
+            if (distance <= radius) {
                 result.push(GeoTag);
-            //}
+            }
         })
 
         return result;
     }
 
     static searchNearbyGeoTags(location, radius, keyword) {
-        let result = this.getNearbyGeoTags(location, radius);
+        let nearby = [];
+        nearby = this.getNearbyGeoTags(location, radius);
+        let returnval = [];
 
-        result.forEach(function (GeoTag) {
-            let gtname = GeoTag.getName;
-            let gttag = GeoTag.getTag;
+        nearby.forEach(function (GeoTag, index) {
+            let gtname = GeoTag.name;
+            let gttag = GeoTag.hashtag;
             let keywordStr = keyword;
-            if (!(gtname.includes(keywordStr) || gttag.includes(keywordStr))) {
-                result.splice(result.indexOf(GeoTag), 1);
+            /*
+            console.log("gtname " + gtname);
+            console.log("gttag " + gttag);
+            console.log("keywordStr " + keywordStr);
+            console.log("index " + index);
+            */
+            if ( (gtname.includes(keywordStr) || gttag.includes(keywordStr)) ) {
+                returnval.push(GeoTag);
             }
         })
 
-        return result;
+        return returnval;
     }
 
 }
