@@ -42,6 +42,7 @@ const GeoTagStore = require('../models/geotag-store');
 
 // TODO: extend the following route example if necessary
 router.get('/', (req, res) => {
+
     res.render('index', {taglist: []})
 });
 
@@ -62,7 +63,7 @@ router.get('/', (req, res) => {
 
 // TODO: ... your code here ...
 router.post('/tagging', (req, res) => {
-    console.log(req.body);
+    //console.log(req.body);
     let tag = new GeoTag(req.body["taggingName"],
         req.body["taggingLatitude"],
         req.body["taggingLongitude"],
@@ -89,8 +90,8 @@ router.post('/tagging', (req, res) => {
 
 // TODO: ... your code here ...
 router.post('/discovery', (req, res) => {
-    console.log(req.body);
-    console.log("req.body[searchterm] " + req.body["searchterm"]);
+    //console.log(req.body);
+    //console.log("req.body[searchterm] " + req.body["searchterm"]);
     let queryTag = new GeoTag('Query',
         req.body["searchLatitude"],
         req.body["searchLongitude"],

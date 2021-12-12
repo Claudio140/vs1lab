@@ -47,7 +47,7 @@ class InMemoryGeoTagStore {
             let dx = 71.5 * (GeoTag.longitude - location.longitude);
             let dy = 111.3 * (GeoTag.latitude - location.latitude);
             let distance = Math.sqrt(dx * dx + dy * dy);
-            console.log("distance " + distance);
+            //console.log("distance " + distance);
 
             if (distance <= radius) {
                 result.push(GeoTag);
@@ -66,10 +66,12 @@ class InMemoryGeoTagStore {
             let gtname = GeoTag.name;
             let gttag = GeoTag.hashtag;
             let keywordStr = keyword;
+            /*
             console.log("gtname " + gtname);
             console.log("gttag " + gttag);
             console.log("keywordStr " + keywordStr);
             console.log("index " + index);
+            */
             if ( (gtname.includes(keywordStr) || gttag.includes(keywordStr)) ) {
                 returnval.push(GeoTag);
             }
