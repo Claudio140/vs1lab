@@ -42,8 +42,10 @@ class InMemoryGeoTagStore {
         let result = [];
 
         this.#geoTags.forEach(function (GeoTag) {
-            let distance = Math.sqrt(Math.pow(GeoTag.getLat - location.getLat, 2) +
-                Math.pow(GeoTag.getLon - location.getLon, 2));
+            // Factors added to convert from degrees to kilometers
+            let dx = 71.5 * (GeoTag.longitude - location.longitude);
+            let dy = 111.3 * (GeoTag.latitude - location.latitude);
+            let distance = Math.sqrt(dx * dx + dy * dy);
 
             if (distance <= radius) {
                 result.push(GeoTag);
@@ -54,15 +56,21 @@ class InMemoryGeoTagStore {
     }
 
     static searchNearbyGeoTags(location, radius, keyword) {
-        let result = this.getNearbyGeoTags(location, radius);
+        let nearby = [];
+        nearby = this.getNearbyGeoTags(location, radius);
+        let returnval = [];
 
-        result.forEach(function (GeoTag) {
-            if (!(GeoTag.getName.includes(keyword) || GeoTag.getTag.includes(keyword))) {
-                result.splice(result.indexOf(GeoTag), 1);
+        nearby.forEach(function (GeoTag, index) {
+            let gtname = GeoTag.name;
+            let gttag = GeoTag.hashtag;
+            let keywordStr = keyword;
+
+            if ( (gtname.includes(keywordStr) || gttag.includes(keywordStr)) ) {
+                returnval.push(GeoTag);
             }
         })
 
-        return result;
+        return returnval;
     }
 
 }

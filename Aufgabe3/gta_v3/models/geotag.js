@@ -16,14 +16,11 @@ class GeoTag {
         this.latitude = latitude;
         this.longitude = longitude;
         this.hashtag = hashtag;
+
     }
 
-    name;
-    latitude;
-    longitude;
-    hashtag;
 
-    getName() {
+    /*getName() {
         return this.name;
     }
     getLat() {
@@ -34,9 +31,19 @@ class GeoTag {
     }
     getTag() {
         return this.hashtag;
-    }
+    }*/
+
+
+    name;
+    latitude;
+    longitude;
+    hashtag;
+
+
 
     
 }
+
+
 
 module.exports = GeoTag;

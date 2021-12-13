@@ -35,9 +35,9 @@
                 <fieldset>
                     <legend>Add a new location</legend>
                     <label for="taggingLatitude">Latitude</label>
-                    <input id="taggingLatitude" name="taggingLatitude" type="number" step="0.001"/>
+                    <input id="taggingLatitude" name="taggingLatitude" type="number" step="0.000001"/>
                     <label for="taggingLongitude">Longitude</label>
-                    <input id="taggingLongitude" name="taggingLongitude" type="number" step="0.001"/>
+                    <input id="taggingLongitude" name="taggingLongitude" type="number" step="0.000001"/>
                     <label for="taggingName">Name</label>
                     <input id="taggingName" name="taggingName" maxlength="10" placeholder="e.g. Cafeteria Moltkestrasse" required/>
                     <label for="taggingHashtag">Hashtag</label>
@@ -82,14 +82,13 @@
                 <div class="discovery__taglist col-4">
                     <ul class="discovery__results" id="discoveryResults">
                         <% if (taglist !== undefined) taglist.forEach(function(gtag) { %>
-                            <li><%= gtag.name %> ( <%= gtag.latitude %>,<%= gtag.longitude %>) <%= gtag.hashtag %> </li>
+                            <li><%= gtag.name %> (<%= gtag.latitude %>,<%= gtag.longitude %>) <%= gtag.hashtag %> </li>
                         <% }); %>
                     </ul>
                 </div>
 
                 <div class="discovery__map col-8">
-                    <img src="./images/mapview.jpg" alt="a map with locations" id="mapView" data-tags=""/>
-                    <% function updateTags() { document.getElementById("mapView").dataset.tags = JSON.stringify(taglist) } %>
+                    <img src="./images/mapview.jpg" alt="a map with locations" id="mapView" data-tags='<%= JSON.stringify(taglist) %>'/>
                     <span>Result map</span>
                 </div>
             </div>
