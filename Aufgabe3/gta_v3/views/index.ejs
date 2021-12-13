@@ -35,9 +35,9 @@
                 <fieldset>
                     <legend>Add a new location</legend>
                     <label for="taggingLatitude">Latitude</label>
-                    <input id="taggingLatitude" name="taggingLatitude" type="number" step="0.000001"/>
+                    <input id="taggingLatitude" name="taggingLatitude" type="number" step="0.000001" value="<%= currentLocation.latitude %>"/>
                     <label for="taggingLongitude">Longitude</label>
-                    <input id="taggingLongitude" name="taggingLongitude" type="number" step="0.000001"/>
+                    <input id="taggingLongitude" name="taggingLongitude" type="number" step="0.000001" value="<%= currentLocation.longitude %>"/>
                     <label for="taggingName">Name</label>
                     <input id="taggingName" name="taggingName" maxlength="10" placeholder="e.g. Cafeteria Moltkestrasse" required/>
                     <label for="taggingHashtag">Hashtag</label>
@@ -46,15 +46,6 @@
                 </fieldset>
             </form>
 
-            <script>
-                let tagLat = document.getElementById("taggingLatitude");
-                let tagLong = document.getElementById("taggingLongitude");
-                let searchLat = document.getElementById("searchLatitude");
-                let searchLong = document.getElementById("searchLongitude");
-
-                if (tagLat.value !== null) searchLat.value = tagLat.value;
-                if (tagLong.value !== null) searchLong.value = tagLong.value;
-            </script>
             <!-- ############### VS1Lab 1a Form 1 End -->
 
         </section>
@@ -70,8 +61,8 @@
                     <legend>Find a saved location</legend>
                     <label for="searchterm">Search term</label>
                     <input id="searchterm" name="searchterm" placeholder="Type in your search here..."/>
-                    <input type="hidden" id="searchLatitude" name="searchLatitude" value=""/>
-                    <input type="hidden" id="searchLongitude" name="searchLongitude" value=""/>
+                    <input type="hidden" id="searchLatitude" name="searchLatitude" value="<%= currentLocation.latitude %>"/>
+                    <input type="hidden" id="searchLongitude" name="searchLongitude" value="<%= currentLocation.longitude %>"/>
                     <input type="submit" id="searchButton" value="Search">
                 </fieldset>
 
