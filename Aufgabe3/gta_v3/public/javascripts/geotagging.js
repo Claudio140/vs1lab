@@ -25,9 +25,11 @@ function updateLocation() {
             LocationHelper.findLocation(updateDocument);
         } catch (e) {
             console.log("The GeoLocation API is currently unavailable.");
+            return;
         }
     }
 
+    updateMap(tagLat.value, tagLong.value);
 }
 
 function updateDocument(helper) {
@@ -37,17 +39,16 @@ function updateDocument(helper) {
     document.getElementById("searchLongitude").value = helper.longitude;
 
     console.log("Location updated.");
+}
 
+function updateMap(lat, lon) {
     // Part 2: MapQuest API
     let mapManager = new MapManager("3AxCFIxyzjGPuyQJTKjFZiqCIfHqTPDX");
     let taglist = document.getElementById("mapView").dataset.tags;
 
     console.log(taglist);
 
-    let mapString = mapManager.getMapUrl(
-        helper.latitude,
-        helper.longitude,
-        JSON.parse(taglist));
+    let mapString = mapManager.getMapUrl(lat, lon, JSON.parse(taglist));
     document.getElementById("mapView").src = mapString;
 }
 
