@@ -90,8 +90,8 @@ router.post('/tagging', (req, res) => {
 
 // TODO: ... your code here ...
 router.post('/discovery', (req, res) => {
-    //console.log(req.body);
-    //console.log("req.body[searchterm] " + req.body["searchterm"]);
+    console.log(req.body);
+    console.log("req.body[searchterm] " + req.body["searchterm"]);
     let queryTag = new GeoTag('Query',
         req.body["searchLatitude"],
         req.body["searchLongitude"],
