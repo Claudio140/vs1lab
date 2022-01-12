@@ -70,7 +70,9 @@ router.put("/api/geotags/:id", function (req, res) {
     let id = req.params.id;
     for (let i = 0; i < memoryTags.length; i++) {
         if(memoryTags[i].id == id){
-            let newTag = new GeoTag(req.body.name, req.body.latitude, req.body.longitude, req.body.hashtag)
+            let nextID = GeoTag.nextId;
+            let newTag = new GeoTag(req.body.name, req.body.latitude, req.body.longitude, req.body.hashtag);
+            GeoTag.nextId = nextID;
             newTag.id = memoryTags[i].id;
             memoryTags[i] = newTag
             res.json(JSON.stringify(memoryTags[i]))

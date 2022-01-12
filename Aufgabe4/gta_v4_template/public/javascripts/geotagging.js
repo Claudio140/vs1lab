@@ -56,6 +56,7 @@ function updateDocument(helper) {
 document.addEventListener("DOMContentLoaded", () => {
     updateLocation();
     getInitialValues();
+
     document.getElementById("addButton").addEventListener("click", function (event) {
         let data = {
             latitude: document.getElementById("taggingLatitude").value,
@@ -123,10 +124,23 @@ document.addEventListener("DOMContentLoaded", () => {
                     document.getElementById("discoveryResults").appendChild(element);
                 }
                 clientTags = answer.geotags.slice();
+                updateMapWithClientTags();
             }
-
         }
         xhttp.send();
     }
 })
+
+function updateMapWithClientTags() {
+    let newMap = document.createElement("img");
+    newMap.setAttribute("data-tags", JSON.stringify(clientTags));
+    newMap.setAttribute("id","mapView");
+    newMap.setAttribute("alt","2 a map with locations");
+    newMap.setAttribute("src","./images/mapview.jpg");
+    console.log(newMap);
+    document.getElementById("mapView").replaceWith(newMap);
+
+
+}
+
 
