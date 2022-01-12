@@ -85,6 +85,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 let element = document.createElement("li")
                 element.innerHTML = (`${answer.name} ${answer.latitude} ${answer.longitude} ${answer.hashtag}`);
                 document.getElementById("discoveryResults").appendChild(element);
+                clientTags.push(answer)
             }
 
 
@@ -117,6 +118,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (xhttp.readyState === XMLHttpRequest.DONE && xhttp.status === 200) {
                 const answer = JSON.parse(xhttp.response);
                 console.log(answer);
+                document.getElementById("discoveryResults").innerHTML = ""
 
                 for (let i = 0; i < answer.geotags.length; i++) {
                     let element = document.createElement("li")
