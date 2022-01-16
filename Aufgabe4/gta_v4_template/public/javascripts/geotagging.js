@@ -22,14 +22,14 @@ function updateLocation() {
     let tagLong = document.getElementById("taggingLongitude")
 
     // Part 1: GeoLocation API
-    if (tagLat.value == null || tagLong.value == null ||
-        tagLat.value === "" || tagLong.value === "") {
+//    if (tagLat.value == null || tagLong.value == null ||
+//        tagLat.value === "" || tagLong.value === "") {
         try {
             LocationHelper.findLocation(updateDocument);
         } catch (e) {
             console.log("The GeoLocation API is currently unavailable.");
         }
-    }
+//    }
 
 }
 
@@ -47,11 +47,11 @@ function updateDocument(helper) {
 
     console.log(taglist);
 
-    let mapString = mapManager.getMapUrl(
+/*    let mapString = mapManager.getMapUrl(
         helper.latitude,
         helper.longitude,
         JSON.parse(taglist));
-    document.getElementById("mapView").src = mapString;
+    document.getElementById("mapView").src = mapString;*/
 }
 
 // Wait for the page to fully load its DOM content, then call updateLocation
