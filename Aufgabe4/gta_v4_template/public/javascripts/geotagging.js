@@ -10,6 +10,7 @@
 console.log("The geoTagging script is going to start...");
 
 let clientTags = [];
+let mapManager;
 /**
  * TODO: 'updateLocation'
  * A function to retrieve the current location and update the page.
@@ -40,7 +41,7 @@ function updateDocument(helper) {
     console.log("Location updated.");
 
     // Part 2: MapQuest API
-    let mapManager = new MapManager("3AxCFIxyzjGPuyQJTKjFZiqCIfHqTPDX");
+    mapManager = new MapManager("3AxCFIxyzjGPuyQJTKjFZiqCIfHqTPDX");
     let taglist = document.getElementById("mapView").dataset.tags;
 
     console.log(taglist);
@@ -56,6 +57,7 @@ function updateDocument(helper) {
 document.addEventListener("DOMContentLoaded", () => {
     updateLocation();
     getInitialValues();
+})
 
     document.getElementById("addButton").addEventListener("click", function (event) {
         let data = {
@@ -64,8 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
             name: document.getElementById("taggingName").value,
             hashtag: document.getElementById("taggingHashtag").value
         }
-        if(!(data.hashtag.match(/#[a-zA-Z0-9]+/)))
-        {
+        if (!(data.hashtag.match(/#[a-zA-Z0-9]+/))) {
             return;
         }
         const xhttp = new XMLHttpRequest(),
@@ -87,10 +88,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 document.getElementById("discoveryResults").appendChild(element);
                 clientTags.push(answer)
             }
-
-
         }
         xhttp.send(JSON.stringify(data));
+
+        updateMapWithClientTags(data);
     });
 
     document.getElementById("searchButton").addEventListener("click", function () {
@@ -99,6 +100,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 return tag.name.toLowerCase().includes(searchWord) || tag.hashtag.toLowerCase().includes(searchWord);
             }
         );
+        let data = {
+            latitude: document.getElementById("taggingLatitude").value,
+            longitude: document.getElementById("taggingLongitude").value,
+            name: document.getElementById("taggingName").value,
+            hashtag: document.getElementById("taggingHashtag").value
+        }
         console.log("search");
         document.getElementById("discoveryResults").innerHTML = "";
         for (let i = 0; i < filterTags.length; i++) {
@@ -106,6 +113,8 @@ document.addEventListener("DOMContentLoaded", () => {
             element.innerHTML = (`${filterTags[i].name} ${filterTags[i].latitude} ${filterTags[i].longitude} ${filterTags[i].hashtag}`);
             document.getElementById("discoveryResults").appendChild(element);
         }
+
+        updateMapWithSearchTags(filterTags, data);
     });
 
     function getInitialValues() {
@@ -131,18 +140,23 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         xhttp.send();
     }
-})
 
-function updateMapWithClientTags() {
+function updateMapWithClientTags(data) {
     let newMap = document.createElement("img");
     newMap.setAttribute("data-tags", JSON.stringify(clientTags));
     newMap.setAttribute("id","mapView");
     newMap.setAttribute("alt","2 a map with locations");
-    newMap.setAttribute("src","./images/mapview.jpg");
+    newMap.setAttribute("src", mapManager.getMapUrl(data.latitude, data.longitude, clientTags));
     console.log(newMap);
     document.getElementById("mapView").replaceWith(newMap);
-
-
 }
 
-
+function updateMapWithSearchTags(searchTags, data) {
+    let newMap = document.createElement("img");
+    newMap.setAttribute("data-tags", JSON.stringify(searchTags));
+    newMap.setAttribute("id","mapView");
+    newMap.setAttribute("alt","2 a map with locations");
+    newMap.setAttribute("src", mapManager.getMapUrl(data.latitude, data.longitude, searchTags));
+    console.log(newMap);
+    document.getElementById("mapView").replaceWith(newMap);
+}
