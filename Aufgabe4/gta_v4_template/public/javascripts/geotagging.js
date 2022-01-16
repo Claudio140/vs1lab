@@ -119,6 +119,12 @@ document.getElementById("searchButton").addEventListener("click", function () {
 });
 
 function getInitialValues() {
+    let data = {
+        latitude: document.getElementById("taggingLatitude").value,
+        longitude: document.getElementById("taggingLongitude").value,
+        name: document.getElementById("taggingName").value,
+        hashtag: document.getElementById("taggingHashtag").value
+    }
     const xhttp = new XMLHttpRequest(),
         method = "GET",
         url = "http://localhost:3000/api/geotags";
@@ -136,7 +142,7 @@ function getInitialValues() {
                 document.getElementById("discoveryResults").appendChild(element);
             }
             clientTags = answer.geotags.slice();
-            updateMapWithClientTags();
+            updateMapWithClientTags(data);
         }
     }
     xhttp.send();
