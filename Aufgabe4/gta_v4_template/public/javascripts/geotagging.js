@@ -24,11 +24,11 @@ function updateLocation() {
     // Part 1: GeoLocation API
 //    if (tagLat.value == null || tagLong.value == null ||
 //        tagLat.value === "" || tagLong.value === "") {
-        try {
-            LocationHelper.findLocation(updateDocument);
-        } catch (e) {
-            console.log("The GeoLocation API is currently unavailable.");
-        }
+    try {
+        LocationHelper.findLocation(updateDocument);
+    } catch (e) {
+        console.log("The GeoLocation API is currently unavailable.");
+    }
 //    }
 
 }
@@ -47,11 +47,11 @@ function updateDocument(helper) {
 
     console.log(taglist);
 
-/*    let mapString = mapManager.getMapUrl(
-        helper.latitude,
-        helper.longitude,
-        JSON.parse(taglist));
-    document.getElementById("mapView").src = mapString;*/
+    /*    let mapString = mapManager.getMapUrl(
+            helper.latitude,
+            helper.longitude,
+            JSON.parse(taglist));
+        document.getElementById("mapView").src = mapString;*/
 }
 
 // Wait for the page to fully load its DOM content, then call updateLocation
@@ -70,14 +70,34 @@ document.getElementById("addButton").addEventListener("click", function (event) 
     if (!(data.hashtag.match(/#[a-zA-Z0-9]+/))) {
         return;
     }
-    const xhttp = new XMLHttpRequest(),
+    /*const xhttp = new XMLHttpRequest(),
         method = "POST",
         url = "http://localhost:3000/api/geotags";
     xhttp.open(method, url, true);
-    xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");*/
+
+    fetch("http://localhost:3000/api/geotags", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(data)
+    })
+        .then(response => response.json())
+        .then(data => console.log(data))
+        /*.then(() => function (response) {
+            let element = document.createElement("li");
+            element.innerHTML = (`${response.json.name} ${response.json.latitude} ${response.json.longitude} ${response.json.hashtag}`);
+            document.getElementById("discoveryResults").appendChild(element);
+            clientTags.push(response);
+        })*/
+        .catch(error => console.log(error));
+
+    let element = document.createElement("li")
+    element.innerHTML = (`${data.name} ${data.latitude} ${data.longitude} ${data.hashtag}`);
+    document.getElementById("discoveryResults").appendChild(element);
+    clientTags.push(data);
 
 
-    xhttp.onreadystatechange = function () {
+    /*xhttp.onreadystatechange = function () {
         console.log(xhttp.readyState);
         if (xhttp.readyState === XMLHttpRequest.DONE && xhttp.status === 200) {
 
@@ -90,7 +110,7 @@ document.getElementById("addButton").addEventListener("click", function (event) 
             clientTags.push(answer)
         }
     }
-    xhttp.send(JSON.stringify(data));
+    xhttp.send(JSON.stringify(data));*/
 
     updateMapWithClientTags(data);
 });
