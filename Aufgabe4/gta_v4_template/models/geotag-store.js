@@ -38,6 +38,10 @@ class InMemoryGeoTagStore {
         this.#geoTags.splice(this.#geoTags.indexOf(GeoTag), 1);
     }
 
+    static getAllGeoTags() {
+        return this.#geoTags;
+    }
+
     static getNearbyGeoTags(location, radius) {
         let result = [];
 
