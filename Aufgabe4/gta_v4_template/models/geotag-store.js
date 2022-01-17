@@ -65,11 +65,10 @@ class InMemoryGeoTagStore {
         let returnval = [];
 
         nearby.forEach(function (GeoTag, index) {
-            let gtname = GeoTag.name;
-            let gttag = GeoTag.hashtag;
-            let keywordStr = keyword;
+            let gtname = GeoTag.name.toLowerCase();
+            let gttag = GeoTag.hashtag.toLowerCase();
 
-            if ( (gtname.includes(keywordStr) || gttag.includes(keywordStr)) ) {
+            if ( (gtname.includes(keyword.toLowerCase()) || gttag.includes(keyword.toLowerCase())) ) {
                 returnval.push(GeoTag);
             }
         })

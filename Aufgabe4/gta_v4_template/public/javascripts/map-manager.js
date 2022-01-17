@@ -23,7 +23,7 @@
      * @param {number} zoom The map zoom, defaults to 12
      * @returns {string} URL of generated map
      */
-    getMapUrl(latitude, longitude, tags = [], zoom = 10) {
+    getMapUrl(latitude, longitude, tags = [], zoom = 12) {
         if (!this.#apiKey) {
             console.log("No API key provided.");
             return "images/mapview.jpg";

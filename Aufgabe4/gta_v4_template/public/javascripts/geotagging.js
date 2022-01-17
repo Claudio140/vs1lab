@@ -61,63 +61,64 @@ document.addEventListener("DOMContentLoaded", () => {
 })
 
 document.getElementById("addButton").addEventListener("click", function (event) {
-    let data = {
+    let taggingData = {
         latitude: document.getElementById("taggingLatitude").value,
         longitude: document.getElementById("taggingLongitude").value,
         name: document.getElementById("taggingName").value,
         hashtag: document.getElementById("taggingHashtag").value
     }
-    if (!(data.hashtag.match(/#[a-zA-Z0-9]+/))) {
+    if (!(taggingData.hashtag.match(/#[a-zA-Z0-9]+/))) {
         return;
     }
 
     fetch("/api/geotags", {
         method: "POST",
         headers: {"Content-Type": "application/json"},
-        body: JSON.stringify(data)
+        body: JSON.stringify(taggingData)
     })
         .then(response => response.json())
-        .then(data => onAddButtonSuccess(data))
+        .then(data => onAddButtonSuccess(data, taggingData.latitude, taggingData.longitude))
         .catch(error => console.log(error));
-
-    updateMapWithClientTags(data);
 });
 
-function onAddButtonSuccess (data) {
-    let dataJson = JSON.parse(data);
+function onAddButtonSuccess (data, lat, lon) {
+    let dataJson = data;
 
     let element = document.createElement("li")
     element.innerHTML = (`${dataJson.name} ${dataJson.latitude} ${dataJson.longitude} ${dataJson.hashtag}`);
     document.getElementById("discoveryResults").appendChild(element);
     clientTags.push(dataJson);
     console.log(dataJson);
+
+    updateMapWithData(clientTags, lat, lon);
 }
 
 document.getElementById("searchButton").addEventListener("click", function () {
     let searchWord = document.getElementById("searchterm").value.toLowerCase();
-    let filterTags = clientTags.filter((tag) => {
-            return tag.name.toLowerCase().includes(searchWord) || tag.hashtag.toLowerCase().includes(searchWord);
-        }
-    );
-    let data = {
+    let taggingData = {
         latitude: document.getElementById("taggingLatitude").value,
         longitude: document.getElementById("taggingLongitude").value,
         name: document.getElementById("taggingName").value,
         hashtag: document.getElementById("taggingHashtag").value
     }
-    console.log("search");
-    document.getElementById("discoveryResults").innerHTML = "";
-    for (let i = 0; i < filterTags.length; i++) {
-        let element = document.createElement("li");
-        element.innerHTML = (`${filterTags[i].name} ${filterTags[i].latitude} ${filterTags[i].longitude} ${filterTags[i].hashtag}`);
-        document.getElementById("discoveryResults").appendChild(element);
+
+    let getURL = "/api/geotags";
+    let searchString = "?search=" + searchWord + "&lat=" + taggingData.latitude + "&lon=" + taggingData.longitude;
+
+    if (searchWord.length > 0) {
+        getURL = getURL + searchString;
     }
 
-    updateMapWithSearchTags(filterTags, data);
+    fetch( getURL, {
+        method: 'GET'
+    })
+        .then(response => response.json())
+        .then(data => onSearchSuccess(data, taggingData.latitude, taggingData.longitude))
+        .catch(error => console.log('Error: ' + error));
 });
 
 function getInitialValues() {
-    let data = {
+    let taggingData = {
         latitude: document.getElementById("taggingLatitude").value,
         longitude: document.getElementById("taggingLongitude").value,
         name: document.getElementById("taggingName").value,
@@ -128,39 +129,29 @@ function getInitialValues() {
         method: "GET"
     })
         .then(response => response.json())
-        .then(data => onSearchSuccess(data))
+        .then(data => onSearchSuccess(data, taggingData.latitude, taggingData.longitude))
         .catch(error => console.log('Error: ' + error))
 }
 
-function onSearchSuccess(data) {
+function onSearchSuccess(data, lat, lon) {
     console.log(data);
-    console.log('Hello World');
 
+    document.getElementById("discoveryResults").innerHTML = "";
     for (let i = 0; i < data.geotags.length; i++) {
         let element = document.createElement("li")
         element.innerHTML = (`${data.geotags[i].name} ${data.geotags[i].latitude} ${data.geotags[i].longitude} ${data.geotags[i].hashtag}`);
         document.getElementById("discoveryResults").appendChild(element);
     }
     clientTags = data.geotags.slice();
-    updateMapWithClientTags(clientTags);
+    updateMapWithData(clientTags, lat, lon);
 }
 
-function updateMapWithClientTags(data) {
+function updateMapWithData(data, lat, lon) {
     let newMap = document.createElement("img");
-    newMap.setAttribute("data-tags", JSON.stringify(clientTags));
+    newMap.setAttribute("data-tags", JSON.stringify(data));
     newMap.setAttribute("id", "mapView");
     newMap.setAttribute("alt", "2 a map with locations");
-    newMap.setAttribute("src", mapManager.getMapUrl(data.latitude, data.longitude, clientTags));
-    console.log(newMap);
-    document.getElementById("mapView").replaceWith(newMap);
-}
-
-function updateMapWithSearchTags(searchTags, data) {
-    let newMap = document.createElement("img");
-    newMap.setAttribute("data-tags", JSON.stringify(searchTags));
-    newMap.setAttribute("id", "mapView");
-    newMap.setAttribute("alt", "2 a map with locations");
-    newMap.setAttribute("src", mapManager.getMapUrl(data.latitude, data.longitude, searchTags));
+    newMap.setAttribute("src", mapManager.getMapUrl(lat, lon, data));
     console.log(newMap);
     document.getElementById("mapView").replaceWith(newMap);
 }

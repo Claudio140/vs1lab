@@ -55,15 +55,16 @@ router.get("/api/geotags", function (req, res){
             longitude: url.searchParams.get('lon')
         }
         res.json({geotags: GeoTagStore.searchNearbyGeoTags(location, 100000, url.searchParams.get('search'))});
+    } else {
+        console.log(GeoTagStore.getAllGeoTags());
+        res.json({geotags: GeoTagStore.getAllGeoTags()});
     }
-    console.log(GeoTagStore.getAllGeoTags());
-    res.json({geotags: GeoTagStore.getAllGeoTags()});
 })
 
 router.post("/api/geotags", function (req, res){
     GeoTagStore.addGeoTag(new GeoTag(req.body.name, req.body.latitude, req.body.longitude, req.body.hashtag));
     console.log(GeoTagStore.getAllGeoTags());
-    res.json(JSON.stringify(req.body));
+    res.json(req.body);
 })
 
 router.get("/api/geotags/:id", function (req,res) {
@@ -71,7 +72,8 @@ router.get("/api/geotags/:id", function (req,res) {
     let tags = GeoTagStore.getAllGeoTags();
     for (let i = 0; i < tags.length; i++) {
         if(tags[i].id == id){
-            res.json(JSON.stringify(tags[i]))
+            res.json(tags[i])
+            return;
         }
     }
     res.sendStatus(404)
@@ -87,7 +89,8 @@ router.put("/api/geotags/:id", function (req, res) {
             GeoTag.nextId = nextID;
             newTag.id = tags[i].id;
             tags[i] = newTag
-            res.json(JSON.stringify(tags[i]))
+            res.json(tags[i])
+            return;
         }
     }
     res.sendStatus(404)
@@ -101,6 +104,7 @@ router.delete("/api/geotags/:id", function (req, res) {
         if(tags[i].id == id){
             GeoTagStore.removeGeoTag(tags[i]);
             res.sendStatus(200)
+            return;
         }
     }
     res.sendStatus(500)
