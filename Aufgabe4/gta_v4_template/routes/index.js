@@ -47,6 +47,16 @@ router.get('/', (req, res) => {
 });
 
 router.get("/api/geotags", function (req, res){
+    let url = new URL(req.url, 'http://${req.headers.host}');
+    if (url.searchParams.has('search') &&
+    url.searchParams.has('lat') &&
+    url.searchParams.has('lon')) {
+        let location = {
+            latitude: url.searchParams.get('lat'),
+            longitude: url.searchParams.get('lon')
+        }
+        res.json({geotags: GeoTagStore.searchNearbyGeoTags(location, 100000, url.searchParams.get('search'))});
+    }
     res.json({geotags: memoryTags});
 })
 
