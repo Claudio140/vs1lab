@@ -82,7 +82,7 @@ document.getElementById("addButton").addEventListener("click", function (event) 
         body: JSON.stringify(data)
     })
         .then(response => response.json())
-        .then(data => console.log(data))
+        .then(data => onAddButtonSuccess(data))
         /*.then(() => function (response) {
             let element = document.createElement("li");
             element.innerHTML = (`${response.json.name} ${response.json.latitude} ${response.json.longitude} ${response.json.hashtag}`);
@@ -90,12 +90,6 @@ document.getElementById("addButton").addEventListener("click", function (event) 
             clientTags.push(response);
         })*/
         .catch(error => console.log(error));
-
-    let element = document.createElement("li")
-    element.innerHTML = (`${data.name} ${data.latitude} ${data.longitude} ${data.hashtag}`);
-    document.getElementById("discoveryResults").appendChild(element);
-    clientTags.push(data);
-
 
     /*xhttp.onreadystatechange = function () {
         console.log(xhttp.readyState);
@@ -114,6 +108,14 @@ document.getElementById("addButton").addEventListener("click", function (event) 
 
     updateMapWithClientTags(data);
 });
+
+function onAddButtonSuccess (data) {
+    let element = document.createElement("li")
+    element.innerHTML = (`${data.name} ${data.latitude} ${data.longitude} ${data.hashtag}`);
+    document.getElementById("discoveryResults").appendChild(element);
+    clientTags.push(data);
+    console.log(data);
+}
 
 document.getElementById("searchButton").addEventListener("click", function () {
     let searchWord = document.getElementById("searchterm").value.toLowerCase();
@@ -145,7 +147,7 @@ function getInitialValues() {
         name: document.getElementById("taggingName").value,
         hashtag: document.getElementById("taggingHashtag").value
     }
-    const xhttp = new XMLHttpRequest(),
+    /*const xhttp = new XMLHttpRequest(),
         method = "GET",
         url = "http://localhost:3000/api/geotags";
     xhttp.open(method, url, true);
@@ -165,7 +167,26 @@ function getInitialValues() {
             updateMapWithClientTags(data);
         }
     }
-    xhttp.send();
+    xhttp.send();*/
+
+    fetch("http://localhost:3000/api/geotags", {
+        method: "GET"
+    })
+        .then(response => function() {
+            console.log(response.json());
+
+            for (let i = 0; i < response.geotags.length; i++) {
+                let element = document.createElement("li")
+                element.innerHTML = (`${response.geotags[i].name} ${response.geotags[i].latitude} ${response.geotags[i].longitude} ${response.geotags[i].hashtag}`);
+                document.getElementById("discoveryResults").appendChild(element);
+            }
+            clientTags = response.geotags.slice();
+            updateMapWithClientTags(data);
+        })
+        .then(data => console.log(data))
+        .catch(error => console.log('Error: ' + error))
+
+
 }
 
 function updateMapWithClientTags(data) {
